@@ -1,0 +1,33 @@
+# Dependencies (reinstalled inside the build stage)
+node_modules
+
+# Next.js build output (produced inside the container)
+.next
+out
+
+# Source control
+.git
+.gitignore
+
+# Local env files — inject secrets at runtime via k8s Secrets/ConfigMaps
+.env
+.env.*
+!.env.example
+
+# Dev / editor
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test & lint artefacts
+coverage
+.eslintcache
+
+# Postman / docs
+*.postman_collection.json
+README.md

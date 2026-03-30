@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wrappp-web
+  namespace: default
+  labels:
+    app: wrappp-web
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+    # Uncomment to enable cert-manager TLS:
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx    # change to your ingress class
+  # tls:
+  #   - hosts:
+  #       - wrappp.io
+  #     secretName: wrappp-web-tls
+  rules:
+    - host: wrappp.io        # ← replace with your domain
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: wrappp-web
+                port:
+                  number: 80
