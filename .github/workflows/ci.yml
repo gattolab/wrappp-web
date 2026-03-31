@@ -79,7 +79,7 @@ jobs:
 
     # ↓ Path to the reusable workflow in the shared API repo.
     #   Update the @ref if you pin to a specific tag or SHA.
-    uses: gattolab/wrappp/.github/workflows/ci-reusable.yml@main
+    uses: gattolab/ci-workflows/.github/workflows/reusable-workflow-ci.yml@main
 
     with:
       # Name used for the GHCR image and the manifest path
