@@ -1,7 +1,7 @@
 export default function CTASection() {
   return (
     <section id="pricing" className="py-24 lg:py-32 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#1E2D87] via-[#2D3AC0] to-[#3B5BDB]" />
+      <div className="absolute inset-0 bg-linear-to-br from-[#1E2D87] via-[#2D3AC0] to-[#3B5BDB]" />
       <div className="absolute inset-0 grid-pattern opacity-10" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-indigo-400/20 rounded-full blur-3xl" />
 
@@ -13,7 +13,7 @@ export default function CTASection() {
       <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 mb-8">
           <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs font-semibold text-white/80 uppercase tracking-wider">Free forever tier available</span>
+          <span className="text-xs font-semibold text-white/80 uppercase tracking-wider">Free to use · No sign-up needed</span>
         </div>
 
         <h2 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-6 leading-tight">
@@ -21,7 +21,7 @@ export default function CTASection() {
           <span className="text-indigo-200">right now</span>
         </h2>
         <p className="text-lg text-indigo-200 leading-relaxed mb-10 max-w-2xl mx-auto">
-          No account required. No credit card. No setup. Just paste your URL and get a short link in seconds. Upgrade when you&apos;re ready for analytics and API access.
+          No account. No credit card. No setup. Paste your URL and get a short link instantly. Links stay live for 30 days — and every click automatically extends them for another 30. Upgrade anytime for analytics and full API access.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
@@ -49,7 +49,7 @@ export default function CTASection() {
         <div className="flex items-center justify-center gap-6 flex-wrap">
           {[
             "No credit card",
-            "GDPR compliant",
+            "30-day rolling expiry",
             "99.98% uptime",
             "Open API",
           ].map((badge, i) => (

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 interface Props {
   initialLinks: ShortenedLink[];
+  redirectBase?: string;
 }
 
 function formatDate(dateStr: string) {
@@ -26,7 +27,7 @@ function truncateUrl(url: string, max = 40) {
   return url.slice(0, max) + "…";
 }
 
-export default function LinksTable({ initialLinks }: Props) {
+export default function LinksTable({ initialLinks, redirectBase = "https://go.wrappp.io" }: Props) {
   const [links, setLinks] = useState(initialLinks);
   const [deletingCode, setDeletingCode] = useState<string | null>(null);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
@@ -84,7 +85,7 @@ export default function LinksTable({ initialLinks }: Props) {
       {/* Rows */}
       <div className="divide-y divide-slate-50">
         {links.map((link) => {
-          const shortUrl = link.short_url ?? `go.wrappp.link/r/${link.code}`;
+          const shortUrl = link.short_url ?? `${redirectBase}/r/${link.code}`;
           const isDeleting = deletingCode === link.code;
           const isCopied = copiedCode === link.code;
 
@@ -97,7 +98,7 @@ export default function LinksTable({ initialLinks }: Props) {
             >
               {/* Short URL */}
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-indigo-500">
                     <path d="M5.5 7.5C5.76 7.83 6.09 8.1 6.46 8.29C6.84 8.47 7.25 8.57 7.67 8.59C8.09 8.61 8.51 8.54 8.9 8.39C9.29 8.24 9.64 8.01 9.92 7.72L11.42 6.22C11.97 5.65 13.27 4.89 13.26 4.1C13.25 3.31 12.93 2.56 12.37 2C11.81 1.44 11.06 1.12 10.27 1.11C9.48 1.1 8.72 1.4 8.15 1.95L7.33 2.77" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
                     <path d="M8.5 6.5C8.24 6.17 7.91 5.9 7.54 5.71C7.16 5.53 6.75 5.43 6.33 5.41C5.91 5.39 5.49 5.46 5.1 5.61C4.71 5.76 4.36 5.99 4.08 6.28L2.58 7.78C2.03 8.35 1.73 9.11 1.74 9.9C1.75 10.69 3.07 11.44 3.63 12C4.19 12.56 4.94 12.88 5.73 12.89C6.52 12.9 7.28 12.6 7.85 12.05L8.67 11.23" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />

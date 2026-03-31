@@ -95,7 +95,7 @@ export default function HeroIllustration() {
             <span className="text-xs font-semibold text-slate-700">Link created!</span>
           </div>
           <div className="bg-indigo-50 rounded-lg px-3 py-2 mb-2">
-            <p className="text-xs font-mono font-bold text-indigo-600">go.wrappp.link/xK9mP</p>
+            <p className="text-xs font-mono font-bold text-indigo-600">wrappp.link/r/xK9mP</p>
           </div>
           {/* <div className="flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />

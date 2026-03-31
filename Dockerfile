@@ -19,13 +19,6 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build-time env vars (non-secret, baked into the bundle).
-# Override at build time with --build-arg if needed.
-ARG NEXT_PUBLIC_API_BASE=https://api.wrappp.link
-ARG NEXT_PUBLIC_REDIRECT_BASE=https://go.wrappp.link
-ENV NEXT_PUBLIC_API_BASE=$NEXT_PUBLIC_API_BASE
-ENV NEXT_PUBLIC_REDIRECT_BASE=$NEXT_PUBLIC_REDIRECT_BASE
-
 # Disable Next.js telemetry during build
 ENV NEXT_TELEMETRY_DISABLED=1
 

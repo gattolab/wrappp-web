@@ -18,7 +18,7 @@ const testimonials = [
     rating: 5,
   },
   {
-    quote: "The link expiration feature alone saved a major campaign headache. Plus the QR codes work perfectly for our product packaging.",
+    quote: "The rolling 30-day expiry is genius — active links just keep renewing themselves, and dead ones clean up automatically. Plus the QR codes work perfectly for our product packaging.",
     author: "Sara Lindqvist",
     role: "Marketing Director",
     company: "Bloom Studio",
@@ -131,7 +131,7 @@ export default function TestimonialsSection() {
               {/* Author */}
               <div className="flex items-center gap-3">
                 <div
-                  className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.color} flex items-center justify-center text-white text-xs font-bold flex-shrink-0`}
+                  className={`w-10 h-10 rounded-full bg-linear-to-br ${t.color} flex items-center justify-center text-white text-xs font-bold shrink-0`}
                 >
                   {t.avatar}
                 </div>

@@ -54,8 +54,8 @@ const features = [
       </svg>
     ),
     color: "amber",
-    title: "Link Expiration",
-    description: "Set custom expiry dates for time-sensitive campaigns. Links automatically become inactive when they expire.",
+    title: "Smart Link Expiration",
+    description: "Links stay active for 30 days from creation. Every click resets the clock — so active links never disappear. Idle links expire quietly on their own.",
   },
   {
     icon: (
@@ -110,7 +110,7 @@ export default function FeaturesSection() {
                 className="feature-card group relative bg-white rounded-2xl border border-slate-100 p-7 cursor-default"
               >
                 {/* Subtle gradient on hover */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-50/0 to-indigo-50/0 group-hover:from-indigo-50/40 group-hover:to-blue-50/20 transition-all duration-300" />
+                <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-indigo-50/0 to-indigo-50/0 group-hover:from-indigo-50/40 group-hover:to-blue-50/20 transition-all duration-300" />
 
                 <div className="relative z-10">
                   <div

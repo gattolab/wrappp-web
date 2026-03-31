@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const REDIRECT_BASE = process.env.NEXT_PUBLIC_REDIRECT_BASE ?? "https://go.wrappp.link";
+const REDIRECT_BASE = process.env.REDIRECT_BASE ?? "https://wrappp.link";
 
 export async function GET(
   _request: NextRequest,

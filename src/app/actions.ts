@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { CreateShortenRequest } from "@/types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "https://api.wrappp.io";
+const API_BASE = process.env.API_BASE ?? "https://api.wrappp.io";
 
 export async function shortenUrl(data: CreateShortenRequest) {
   const res = await fetch(`${API_BASE}/api/v1/shorten`, {

@@ -1,7 +1,7 @@
 import { ShortenedLink, CreateShortenRequest, CreateShortenResponse } from "@/types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "https://api.wrappp.link";
-const REDIRECT_BASE = process.env.NEXT_PUBLIC_REDIRECT_BASE ?? "https://go.wrappp.link";
+const API_BASE = process.env.API_BASE ?? "https://api.wrappp.link";
+const REDIRECT_BASE = process.env.REDIRECT_BASE ?? "https://wrappp.link";
 
 export const apiClient = {
   async createShorten(data: CreateShortenRequest): Promise<CreateShortenResponse> {
