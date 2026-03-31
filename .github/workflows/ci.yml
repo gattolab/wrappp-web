@@ -72,7 +72,7 @@ jobs:
   deploy:
     name: Docker · Scan · Push · Bump Helm
     needs: build
-    if: github.event_name == 'push'
+    #if: github.event_name == 'push'
     permissions:
       contents: read
       packages: write
