@@ -1,0 +1,107 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── 1. Lint & type-check (Next.js pre-flight) ───────────────────────────────
+  lint:
+    name: Lint & Type-check
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --frozen-lockfile
+
+      - name: Type-check
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npm run lint
+
+  # ── 2. Next.js build verification (pre-flight) ──────────────────────────────
+  build:
+    name: Next.js Build
+    runs-on: self-hosted
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --frozen-lockfile
+
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+
+  # ── 3. Docker · Scan · Push · Bump Helm (reusable workflow) ─────────────────
+  #
+  #  Delegates to the shared CI pipeline defined in gattolab/wrappp.
+  #  On every push to main/develop it will:
+  #    ① build Docker image   ② run CodeQL + Trivy   ③ push to GHCR
+  #    ④ bump image.tag in gattolab/infra-deployments → apps/wrappp-web/values.yaml
+  #
+  #  Skipped on pull requests (only lint + build run for PR checks).
+  # ────────────────────────────────────────────────────────────────────────────
+  deploy:
+    name: Docker · Scan · Push · Bump Helm
+    needs: build
+    if: github.event_name == 'push'
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+
+    # ↓ Path to the reusable workflow in the shared API repo.
+    #   Update the @ref if you pin to a specific tag or SHA.
+    uses: gattolab/wrappp/.github/workflows/ci-reusable.yml@main
+
+    with:
+      # Name used for the GHCR image and the manifest path
+      app_name: wrappp-web
+
+      # Path inside gattolab/infra-deployments where values.yaml lives
+      deployment_path: apps/wrappp-web
+
+      # Next.js / JavaScript project — not Go
+      codeql_language: javascript
+
+      # Lint is already covered by the job above; leave empty to skip
+      # the reusable workflow's own unit-test step.
+      unittest_command: ""
+
+      # Security policy
+      trivy_severity: "CRITICAL,HIGH"
+      fail_on_security_issues: true
+      trivy_version: "v0.60.0"
+
+    secrets:
+      # Fine-grained PAT with:
+      #   • read:packages + write:packages  (GHCR push)
+      #   • contents:write on gattolab/infra-deployments  (helm bump commit)
+      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
