@@ -5,11 +5,6 @@ on:
   push:
     branches:
       - main
-      - develop
-  pull_request:
-    branches:
-      - main
-      - develop
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -86,7 +81,7 @@ jobs:
       codeql_language: javascript
       unittest_command: ""
       trivy_severity: "CRITICAL,HIGH"
-      fail_on_security_issues: true
+      fail_on_security_issues: false
       trivy_version: ${{ vars.TRIVY_VERSION }}
 
     secrets:

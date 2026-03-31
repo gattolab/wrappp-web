@@ -36,10 +36,15 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=8080
 ENV HOSTNAME=0.0.0.0
 
-# Upgrade OS packages to pick up any patched CVEs, then strip npm
-# (standalone Next.js only needs the node runtime, not a package manager)
+# Upgrade OS packages to pick up any patched CVEs, then strip npm and yarn
+# (standalone Next.js only needs the node binary, not a package manager)
 RUN apk upgrade --no-cache \
- && apk del --no-cache npm \
+ && rm -rf /usr/local/lib/node_modules/npm \
+            /usr/local/lib/node_modules/corepack \
+            /usr/local/bin/npm \
+            /usr/local/bin/npx \
+            /usr/local/bin/corepack \
+            /opt/yarn* \
  && addgroup --system --gid 1001 nodejs \
  && adduser  --system --uid 1001 nextjs
 
