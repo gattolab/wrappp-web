@@ -5,6 +5,14 @@ import { CreateShortenRequest } from "@/types";
 
 const API_BASE = process.env.API_BASE ?? "https://api.wrappp.io";
 
+function validateShortCode(code: string): string {
+  // Allow only URL-safe short codes to prevent path traversal or malformed requests
+  if (!/^[A-Za-z0-9_-]+$/.test(code)) {
+    throw new Error("Invalid short code");
+  }
+  return code;
+}
+
 export async function shortenUrl(data: CreateShortenRequest) {
   const res = await fetch(`${API_BASE}/api/v1/shorten`, {
     method: "POST",
@@ -22,7 +30,8 @@ export async function shortenUrl(data: CreateShortenRequest) {
 }
 
 export async function deleteLink(code: string) {
-  const res = await fetch(`${API_BASE}/api/v1/shorten/${code}`, {
+  const safeCode = validateShortCode(code);
+  const res = await fetch(`${API_BASE}/api/v1/shorten/${safeCode}`, {
     method: "DELETE",
   });
 
