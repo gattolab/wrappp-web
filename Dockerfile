@@ -36,8 +36,11 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=8080
 ENV HOSTNAME=0.0.0.0
 
-# Create a non-root user for security
-RUN addgroup --system --gid 1001 nodejs \
+# Upgrade OS packages to pick up any patched CVEs, then strip npm
+# (standalone Next.js only needs the node runtime, not a package manager)
+RUN apk upgrade --no-cache \
+ && apk del --no-cache npm \
+ && addgroup --system --gid 1001 nodejs \
  && adduser  --system --uid 1001 nextjs
 
 # Copy only what the standalone server needs
