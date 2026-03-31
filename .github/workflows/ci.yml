@@ -78,28 +78,16 @@ jobs:
       packages: write
       security-events: write
 
-    # ↓ Path to the reusable workflow in the shared API repo.
-    #   Update the @ref if you pin to a specific tag or SHA.
     uses: gattolab/ci-workflows/.github/workflows/reusable-workflow-ci.yml@main
 
     with:
-      # Name used for the GHCR image and the manifest path
       app_name: wrappp-web
-
-      # Path inside gattolab/infra-deployments where values.yaml lives
       deployment_path: apps/wrappp-web
-
-      # Next.js / JavaScript project — not Go
       codeql_language: javascript
-
-      # Lint is already covered by the job above; leave empty to skip
-      # the reusable workflow's own unit-test step.
       unittest_command: ""
-
-      # Security policy
       trivy_severity: "CRITICAL,HIGH"
       fail_on_security_issues: true
-      trivy_version: "v0.60.0"
+      trivy_version: ${{ vars.TRIVY_VERSION }}
 
     secrets:
       # Fine-grained PAT with:
