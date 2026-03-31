@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 type Status = "ok" | "degraded" | "down" | "loading";
 
@@ -41,23 +41,29 @@ export default function HealthStatus() {
   const [latency, setLatency] = useState<number | null>(null);
   const [lastChecked, setLastChecked] = useState<string | null>(null);
 
-  const check = useCallback(async () => {
-    try {
-      const res = await fetch("/healthz", { cache: "no-store" });
-      const data: HealthPayload = await res.json();
-      setStatus(data.status);
-      setLatency(data.latency_ms);
-      setLastChecked(data.timestamp);
-    } catch {
-      setStatus("down");
-    }
-  }, []);
-
   useEffect(() => {
+    let cancelled = false;
+
+    const check = async () => {
+      try {
+        const res = await fetch("/healthz", { cache: "no-store" });
+        const data: HealthPayload = await res.json();
+        if (cancelled) return;
+        setStatus(data.status);
+        setLatency(data.latency_ms);
+        setLastChecked(data.timestamp);
+      } catch {
+        if (!cancelled) setStatus("down");
+      }
+    };
+
     check();
     const id = setInterval(check, POLL_INTERVAL_MS);
-    return () => clearInterval(id);
-  }, [check]);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, []);
 
   const { dot, text, label } = config[status];
 
