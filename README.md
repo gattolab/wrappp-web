@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# wrappp-web
 
-## Getting Started
+Frontend for [Wrappp](https://wrappp.link) — a minimalist URL shortener with QR code generation, live health status, and a rolling 30-day link expiry policy.
 
-First, run the development server:
+Built with **Next.js 16 (App Router)** 
+
+---
+
+
+## Features
+
+- Shorten any URL instantly — no account required
+- Auto-generated QR code with one-click download
+- Rolling 30-day expiry — extended by each click on the link
+- Live system health indicator in the footer
+- Dynamic Open Graph images, sitemap, and structured data (JSON-LD)
+- Server-side rendering — no client-side API keys exposed
+
+---
+
+## Local Development
+
+### Prerequisites
+
+- Node.js 20+
+- A running instance of the [wrappp backend API](https://github.com/gattolab/wrappp)
+
+### Setup
+
+```bash
+git clone https://github.com/gattolab/wrappp-web
+cd wrappp-web
+npm install
+```
+
+Copy the environment file and fill in your local values:
+
+```bash
+cp .env.local.example .env.local
+```
+
+```ini
+# .env.local
+SITE_URL=http://localhost:8080
+API_BASE=http://localhost:3000
+REDIRECT_BASE=http://localhost:3000
+```
+
+Start the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# → http://localhost:8080
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Link Expiry Policy
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Links expire **30 days after creation**
+- Each click **resets the 30-day timer**
+- A link that is never clicked expires exactly 30 days after it was created
+- There is no maximum lifetime — an active link never expires
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Issues and PRs welcome at [github.com/gattolab/wrappp](https://github.com/gattolab/wrappp).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To report a bug: [github.com/gattolab/wrappp/issues](https://github.com/gattolab/wrappp/issues)
 
-## Deploy on Vercel
+To support the project: [ko-fi.com/babytub](https://ko-fi.com/babytub)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+MIT © [Gatto Lab](https://github.com/gattolab)
